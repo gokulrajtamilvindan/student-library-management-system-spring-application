@@ -23,9 +23,9 @@ public class BookRequestDto {
 
     private String rackNo;
 
-    private Author author;
+    private int authorId;
 
-    private Card card;
+    private int cardId;
 
     public String getTitle() {
         return title;
@@ -91,20 +91,20 @@ public class BookRequestDto {
         this.rackNo = rackNo;
     }
 
-    public Author getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
-    public Card getCard() {
-        return card;
+    public int getCardId() {
+        return cardId;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
 
 }

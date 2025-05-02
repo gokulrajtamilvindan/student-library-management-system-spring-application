@@ -13,9 +13,9 @@ public class TransactionRequestDto {
 
     private TransactionType transactionType;
 
-    private Book book;
+    private int bookId;
 
-    private Card card;
+    private int cardId;
 
     public String getDueDate() {
         return dueDate;
@@ -41,20 +41,19 @@ public class TransactionRequestDto {
         this.transactionType = transactionType;
     }
 
-    public Book getBook() {
-        return book;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
-    public Card getCard() {
-        return card;
+    public int getCardId() {
+        return cardId;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
-
 }

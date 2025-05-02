@@ -9,6 +9,9 @@ import com.demo.example.student_library_management_system.requestdto.StudentRequ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class StudentService {
 
@@ -31,6 +34,50 @@ public class StudentService {
 
         return "Student and Card Saved Successfully!";
 
+    }
+
+    public Student getStudentById(int id) {
+        Optional<Student> student = studentRepository.findById(id);
+        if (student.isPresent()) {
+            return student.get();
+        } else {
+            return null;
+        }
+    }
+
+    public List<Student> getAllStudents(){
+        List<Student> studentList = studentRepository.findAll();
+        return studentList;
+    }
+
+    public String deleteStudentById(int id){
+        studentRepository.deleteById(id);
+        return "Student [" + id + "] Deleted Successfully along with its card!";
+    }
+
+    public String updateStudent(int id, StudentRequestDto studentRequestDto){
+        //check if a student exists or not.
+        Student student = getStudentById(id);
+
+        if (student != null) {
+
+            student.setName(studentRequestDto.getName());
+            student.setEmail(studentRequestDto.getEmail());
+            student.setMobile(studentRequestDto.getMobile());
+            student.setDepartment(studentRequestDto.getDepartment());
+            student.setSemester(studentRequestDto.getSemester());
+            student.setGender(studentRequestDto.getGender());
+            student.setDob(studentRequestDto.getDob());
+
+            studentRepository.save(student);
+
+            return "Student with id [" + id +"] Updated Successfully!";
+
+        } else {
+
+            return "Student with id [" + id + "] does not exist!";
+
+        }
     }
 
 }

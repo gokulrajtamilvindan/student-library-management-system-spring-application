@@ -1,5 +1,6 @@
 package com.demo.example.student_library_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -96,6 +97,7 @@ public class Student {
         this.dob = dob;
     }
 
+    @JsonManagedReference
     //cascade = CascadeType.ALL - whenever a student creates/deletes/updates a card, the changes will be reflected in the student table
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL) //one student can only have one card
     private Card card;
