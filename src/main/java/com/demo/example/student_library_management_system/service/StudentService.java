@@ -7,6 +7,8 @@ import com.demo.example.student_library_management_system.model.Student;
 import com.demo.example.student_library_management_system.repository.StudentRepository;
 import com.demo.example.student_library_management_system.requestdto.StudentRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,12 +43,58 @@ public class StudentService {
         if (student.isPresent()) {
             return student.get();
         } else {
-            return null;
+          throw new RuntimeException("Student with id [" + id + "] does not exist!");
         }
     }
 
     public List<Student> getAllStudents(){
         List<Student> studentList = studentRepository.findAll();
+        return studentList;
+    }
+
+    /*
+         pagination - fetching or getting the records or data in the form of pages
+
+         page-number - the number of a page we want to see(0, 1, 2, 3, 4,...)
+         page-size - total number of records in each page (fixes for all pages)
+
+         total number of records - 28, page size - 5
+         0th page - 1-5
+         1st page - 6-10
+         2nd page - 11-15
+         3rd page - 16-20
+         4th page - 21-25
+         5th page - 26-28
+         6th page - 0
+
+         total number of records - 11, page size - 3
+         0th page - 1-3
+         1st page - 4-6
+         2nd page - 7-9
+         3rd page - 10-11
+         4th page - 0
+
+         sorting - ascending the records based on ascending order or descending order
+
+         only pagination use:
+            public List<Student> getAllStudentsByPage(int pageNo, int pageSize){
+                List<Student> studentList = studentRepository.findAll(PageRequest.of(pageNo, pageSize)).getContent();
+                return studentList;
+            }
+
+        perform pagination and sorting together:
+            public List<Student> getAllStudentsByPage(int pageNo, int pageSize){
+                List<Student> studentList = studentRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by("name").ascending())).getContent();
+                return studentList;
+            }
+
+
+
+    */
+
+    //pagination and sorting together
+    public List<Student> getAllStudentsByPage(int pageNo, int pageSize){
+        List<Student> studentList = studentRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by("name").ascending())).getContent();
         return studentList;
     }
 

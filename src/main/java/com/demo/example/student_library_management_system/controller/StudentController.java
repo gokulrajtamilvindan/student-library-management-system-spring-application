@@ -17,14 +17,22 @@ public class StudentController {
 
     @PostMapping("/save")
     public String saveStudent(@RequestBody StudentRequestDto studentRequestDto) {
-        String response = studentService.addStudent(studentRequestDto);
-        return response;
+        try {
+            String response = studentService.addStudent(studentRequestDto);
+            return response;
+        } catch (Exception e) {
+            return "Exception Occurred: " + e.getMessage();
+        }
     }
 
     @GetMapping("/find/{id}")
     public Student findStudentById(@PathVariable int id) {
-        Student student = studentService.getStudentById(id);
-        return student;
+        try {
+            Student student = studentService.getStudentById(id);
+            return student;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @GetMapping("/findAll")
@@ -43,6 +51,12 @@ public class StudentController {
     public String updateStudent(@PathVariable int id, @RequestBody StudentRequestDto studentRequestDto){
         String response = studentService.updateStudent(id, studentRequestDto);
         return response;
+    }
+
+    @GetMapping("/getByPage")
+    public List<Student> getStudentByPage(@RequestParam int pageNo, @RequestParam int pageSize) {
+        List<Student> studentList = studentService.getAllStudentsByPage(pageNo, pageSize);
+        return studentList;
     }
 
 }
